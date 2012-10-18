@@ -7,10 +7,6 @@ from colorama import init
 init()
 from colorama import Fore
 
-servers = [
-    "example.com"
-]
-
 OPTS=None
 
 def process_args():
@@ -18,6 +14,7 @@ def process_args():
 
     parser = argparse.ArgumentParser(description="Server pool response testing")
 
+    parser.add_argument('hosts', metavar='host', nargs='+', help='List of hostnames to check')
     parser.add_argument('--version', action='version', version="%(prog)s Brian Wigginton <brianwigginton@gmail.com>")
     parser.add_argument('-p', '--path', default='/', help="target path to check");
     parser.add_argument('-s', '--secure', help="Use HTTPS", action='store_true');
@@ -33,7 +30,7 @@ def process_args():
 def main():
     process_args()
 
-    for server in servers:
+    for server in OPTS.hosts:
 
         protocol = None
         if OPTS.secure:
@@ -43,8 +40,8 @@ def main():
             protocol = 'http://'
             conn = httplib.HTTPConnection(server)
 
-        target = protocol+server+OPTS.path 
-        
+        target = protocol+server+OPTS.path
+
         conn.request("HEAD", OPTS.path)
         r = conn.getresponse()
 
