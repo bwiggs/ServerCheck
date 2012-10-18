@@ -50,7 +50,7 @@ def main():
         if status.startswith("2"):
             status = Fore.GREEN + status + Fore.RESET
         else:
-            status = Fore.RED + status + Fore.RED
+            status = Fore.RED + status + Fore.RESET
 
         print target, status
         #print"\n\t".join(header[0] + ": " + header[1] for header in r.getheaders())
